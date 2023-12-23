@@ -22,7 +22,7 @@ class Modal extends HTMLElement {
         .modal-content {
           box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
           background-color: #fff;
-          padding: 2em;
+          padding: 2em 1.6em;
           top: 0;
           border-radius: 1em 1em 0 0;
           display: flex;
@@ -166,17 +166,15 @@ class Modal extends HTMLElement {
     this.modal = this.shadowRoot.querySelector("#modalWindow");
     this.closeButton = this.shadowRoot.querySelector("#closeButton");
     this.modalTitle = this.shadowRoot.querySelector("#modalTitle");
-
   }
 
   connectedCallback() {
     this.modalTitle.textContent = this.getAttribute("modalTitle");
     this.closeButton.addEventListener("click", () => this.close());
-
   }
 
   close() {
-    if (this.closeMethod === 'hide') {
+    if (this.closeMethod === "hide") {
       this.modal.classList.add("fade-out");
       setTimeout(() => {
         this.modalContainer.classList.add("hidden");
@@ -187,7 +185,6 @@ class Modal extends HTMLElement {
         this.remove();
       }, 250);
     }
-
   }
 
   show() {
@@ -199,14 +196,14 @@ class Modal extends HTMLElement {
     switch (name) {
       case "closemethod":
         if (newValue === "hide") {
-          this.closeMethod = 'hide';
+          this.closeMethod = "hide";
         } else if (newValue === "remove") {
-          this.closeMethod = 'remove';
+          this.closeMethod = "remove";
         }
         break;
 
       case "modaltitle":
-        this.modalTitle.textContent = newValue
+        this.modalTitle.textContent = newValue;
         break;
 
       default:
@@ -1003,7 +1000,6 @@ class Combobox extends HTMLElement {
         (option) => option.value === this.getAttribute("data-value")
       );
       if (option) this.handleChangeValue(option);
-
     }
 
     // for (const attr of this.getAttributeNames()) {
@@ -1061,7 +1057,6 @@ class Combobox extends HTMLElement {
   }
 
   handleChangeValue(option) {
-
     this.input.setAttribute("data-value", option.value);
     this.setAttribute("data-value", option.value);
 
@@ -1100,9 +1095,8 @@ class Combobox extends HTMLElement {
         if (this.getAttribute("data-value")) {
           const option = this.optionList.find(
             (option) => option.value === this.getAttribute("data-value")
-          )
+          );
           if (option) this.handleChangeValue(option);
-
         }
 
         break;
@@ -1246,7 +1240,7 @@ class Button extends HTMLElement {
   connectedCallback() {
     this.getAttributeNames().forEach((attr) => {
       // info avoid duplicating event listeners and id
-      if (attr.startsWith("on") || attr === 'id') return;
+      if (attr.startsWith("on") || attr === "id") return;
 
       this.button.setAttribute(attr, this.getAttribute(attr));
     });
@@ -1521,8 +1515,7 @@ class Skeleton extends HTMLElement {
 }
 
 class Toggle extends HTMLElement {
-
-  static observedAttributes = ["checked", "disabled", 'placeholder'];
+  static observedAttributes = ["checked", "disabled", "placeholder"];
 
   constructor() {
     super();
@@ -1601,21 +1594,25 @@ class Toggle extends HTMLElement {
       </div>
       `;
 
-    this.toggle = this.shadowRoot.querySelector('#toggle');
-    this.placeholder = this.shadowRoot.querySelector('#placeholder');
+    this.toggle = this.shadowRoot.querySelector("#toggle");
+    this.placeholder = this.shadowRoot.querySelector("#placeholder");
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "checked":
-        newValue ? this.toggle.setAttribute('checked', 'true') : this.toggle.removeAttribute('checked')
+        newValue
+          ? this.toggle.setAttribute("checked", "true")
+          : this.toggle.removeAttribute("checked");
         break;
       case "disabled":
-        newValue ? this.toggle.setAttribute('disabled', 'true') : this.toggle.removeAttribute('disabled')
+        newValue
+          ? this.toggle.setAttribute("disabled", "true")
+          : this.toggle.removeAttribute("disabled");
         break;
       case "placeholder":
-        this.placeholder.classList.remove('hidden')
-        this.placeholder.textContent = newValue
+        this.placeholder.classList.remove("hidden");
+        this.placeholder.textContent = newValue;
         break;
       default:
         break;
@@ -1624,8 +1621,11 @@ class Toggle extends HTMLElement {
 }
 
 class Tab extends HTMLElement {
+  // this Tab web component requires the 'tabs' attribute, which is an array of objects containing  the type {text: string, windowId: string}, the 'text' property of the object is the text that will be displayed on the tab button, and the 'windowId' property of the object is the respective window id that needs to be passed on the inner HTML of the <comp-tab> as a <div> with the attr 'data-window = windowId';
 
-  static observedAttributes = ["tabs", "accentColor"];
+  // the attr 'accent-color' can be passed to change the color of the tab and the tab indicator;
+
+  static observedAttributes = ["tabs", "accent-color"];
 
   constructor() {
     super();
@@ -1651,10 +1651,9 @@ class Tab extends HTMLElement {
   }
 
     .tabContainer {
+      --accent-color: #0b53b7;
       display: flex;
       flex-direction: column;
-      border: #c5c5c5;
-      border-radius: 0.6em;
       padding: 1em;
       overflow-x: hidden;
     }
@@ -1663,11 +1662,13 @@ class Tab extends HTMLElement {
       display: grid;
       grid-template-columns: var(--grid-length);
       align-items: center;
+      overflow-x: scroll;
     }
     
     .tabContainer .tabOptionsContainer button {
-      font-size: 1em;
+      font-size: .9em;
       color: #222;
+      background-color: transparent;
       font-weight: 600;
       padding: 0.4em 1em;
       cursor: pointer;
@@ -1687,9 +1688,9 @@ class Tab extends HTMLElement {
       left: 0%;
       width: 0%;
       height: 100%;
-      background-color:  #0b53b7;
+      background-color: var(--accent-color);
       border-radius: 10px 10px 0px 0px;
-      transition: all 300ms ease-in-out;
+      transition: all 300ms cubic-bezier(0.49, 0.91, 0.16, 1);
     }
     
     .tabWindowContainer slot::slotted(div) {
@@ -1700,84 +1701,114 @@ class Tab extends HTMLElement {
       display: flex;
     }
 
+    .tabOptionsContainer::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tabOptionsContainer {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+
+
+    @media (min-width: 640px) {
+      .tabContainer .tabOptionsContainer button {
+        font-size: 1em;
+      }
+    }
+
     </style>
 
+    <div class="tabContainer" id="tab">
+    <div class="tabOptionsContainer" id="tabOptionsContainer">
 
-       <div class="tabContainer">
-            <div class="tabOptionsContainer" id="tabOptionsContainer">
-            </div>
-            <div class="tabIndicator" id="tabIndicator">
-                <div></div>
-            </div>
-            <div class="tabWindowContainer" id="tabWindowContainer">
-                <slot></slot>
-            </div>
-        </div>
+
+      <div class="tabIndicator" id="tabIndicator">
+        <div></div>
+      </div>
+    </div>
+  
+    <div class="tabWindowContainer" id="tabWindowContainer">
+      <slot></slot>
+    </div>
+  </div>
+  
+    
+  
     `;
 
-    this.tabsContainer = this.shadowRoot.querySelector('#tabOptionsContainer');
-    this.windowContaner = this.shadowRoot.querySelector('#tabWindowContainer');
-    this.tabIndicator = this.shadowRoot.querySelector('#tabIndicator > div');
-
-
-    // <div data-window='tab1window' class="tabWindow active"></div>
-
+    this.tabContainer = this.shadowRoot.querySelector("#tab");
+    this.tabsContainer = this.shadowRoot.querySelector("#tabOptionsContainer");
+    this.windowContaner = this.shadowRoot.querySelector("#tabWindowContainer");
+    this.tabIndicator = this.shadowRoot.querySelector("#tabIndicator > div");
   }
 
   connectedCallback() {
-    this.tabs = JSON.parse(this.getAttribute('tabs'));
+    this.tabs = JSON.parse(this.getAttribute("tabs"));
 
     // avoid missing attributes
-    if (!['tabs'].every((attr) => this.hasAttribute(attr))) {
-      console.error('attr missing');
+    if (!["tabs"].every((attr) => this.hasAttribute(attr))) {
+      console.error(
+        "Attribute 'tabs' missing, pass an array of objects {text:string, windowId:'string'}"
+      );
       return;
     }
 
+    const tabsLength = this.tabs.length;
     // set the grid template columns and tab Indicator width
-    this.tabsContainer.style.setProperty('--grid-length', `repeat(${this.tabs.length} , 1fr)`);
-    this.tabIndicator.style.width = `${(100 / this.tabs.length)}%`;
+    this.tabsContainer.style.setProperty(
+      "--grid-length",
+      `repeat(${tabsLength} , minmax(100px, 1fr))`
+    );
+    // this.tabIndicator.parentElement.style.width = `${}px`
+
+    this.tabIndicator.parentElement.style.gridColumn = `${tabsLength} span / ${tabsLength} span`;
+    this.tabIndicator.style.width = `${100 / tabsLength}%`;
 
     // creates tab buttons by according to the 'tabs' attr
-    this.tabs.forEach(tab => {
-      const tabButton = document.createElement('button');
-      tabButton.setAttribute('data-window-id', tab.windowId);
+    this.tabs.forEach((tab) => {
+      const tabButton = document.createElement("button");
+      tabButton.setAttribute("data-window-id", tab.windowId);
       tabButton.textContent = tab.text;
 
-      tab === this.tabs[0] && tabButton.classList.add('active');
+      tab === this.tabs[0] && tabButton.classList.add("active");
 
-      tabButton.addEventListener('click', () => {
-
-        const slot = this.shadowRoot.querySelector('slot');
+      tabButton.addEventListener("click", () => {
+        const slot = this.shadowRoot.querySelector("slot");
         // Get the array of <div> elements inside the slot
-        const windows = slot.assignedNodes({ flatten: true })
-          .filter(node => node.nodeType === Node.ELEMENT_NODE && node.tagName === 'DIV');
+        const windows = slot
+          .assignedNodes({ flatten: true })
+          .filter(
+            (node) =>
+              node.nodeType === Node.ELEMENT_NODE && node.tagName === "DIV"
+          );
 
-        windows.forEach(window => {
-          window.classList.remove('active')
+        windows.forEach((window) => {
+          window.classList.remove("active");
 
-          if (window.getAttribute('data-window') === tab.windowId) {
+          if (window.getAttribute("data-window") === tab.windowId) {
             // windows.querySelector(".active").classList.remove("active");
-            window.classList.add('active');
+            window.classList.add("active");
           }
-        })
-
+        });
 
         // removes all actives tab class
         this.tabsContainer.querySelector(".active").classList.remove("active");
-        tabButton.classList.add('active');
+        tabButton.classList.add("active");
 
+        this.tabIndicator.style.left = `${
+          Array.from(this.tabs).indexOf(tab) * (100 / this.tabs.length)
+        }%`;
+      });
 
-        this.tabIndicator.style.left = `${Array.from(this.tabs).indexOf(tab) * (100 / this.tabs.length)}%`
-      })
-
-      this.tabsContainer.appendChild(tabButton)
+      this.tabsContainer.insertBefore(tabButton, this.tabIndicator.parentElement);
     });
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
-      case 'accentColor':
-        this.style.setProperty('--accent-color', newValue)
+      case "accent-color":
+        this.tabContainer.style.setProperty("--accent-color", newValue);
         break;
       default:
         break;

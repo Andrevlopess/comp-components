@@ -92,9 +92,27 @@ body {
   grid-template-columns: repeat(2, 1fr);
   gap: 1em;
   border: var(--b-1-gray);
-  width: 60vw;
 }
 
 .col-2 {
   grid-column: 2 span / 2 span;
+}
+.containerteste {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+}
+
+.indicator {
+  grid-column: 5 span / 5 span;
+  position: relative;
+  height: 4px;
+  border: 1px solid black;
 }
