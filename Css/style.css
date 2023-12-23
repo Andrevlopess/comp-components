@@ -1,0 +1,100 @@
+:root {
+  --b-1-gray: 1px solid #ccc;
+  --b-rounded: 0.6em;
+  --bg-gray: #c5c5c5;
+  --primary-blue: #0b53b7;
+  --grid-length: repeat(3, 1fr);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+  list-style-type: none;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  border: none;
+  outline: none;
+  scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+  background-color: #f1f1f1;
+}
+
+.container {
+}
+
+/* info tabs styles */
+
+.tabContainer {
+  display: flex;
+  flex-direction: column;
+  border: var(--b-1-gray);
+  border-radius: var(--b-rounded);
+  padding: 1em;
+  overflow-x: hidden;
+}
+
+.tabContainer .tabOptionsContainer {
+  display: grid;
+  grid-template-columns: var(--grid-length);
+  align-items: center;
+}
+
+.tabContainer .tabOptionsContainer button {
+  font-size: 1em;
+  color: #222;
+  font-weight: 600;
+  padding: 0.4em 1em;
+  cursor: pointer;
+}
+.tabContainer .tabOptionsContainer button.active {
+  color: var(--primary-blue);
+}
+
+.tabContainer .tabIndicator {
+  position: relative;
+  height: 4px;
+}
+
+.tabContainer .tabIndicator > div {
+  position: absolute;
+  left: 0%;
+  width: 0%;
+  height: 100%;
+  background-color: var(--primary-blue);
+  border-radius: 10px 10px 0px 0px;
+  transition: all 300ms cubic-bezier(0.49, 0.91, 0.16, 1);
+}
+
+.tabWindowContainer .tabWindow {
+  display: none;
+}
+
+.tabWindowContainer .tabWindow.active {
+  display: flex;
+}
+
+.teste {
+  padding: 1em;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em;
+  border: var(--b-1-gray);
+  width: 60vw;
+}
+
+.col-2 {
+  grid-column: 2 span / 2 span;
+}

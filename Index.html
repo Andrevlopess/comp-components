@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="./Js/compElements.js"></script>
+    <script defer src="./Js/index.js"></script>
+
+    <link rel="stylesheet" href="./Css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <title>Comp Components</title>
+</head>
+
+<body>
+    <div class="container" id="container">
+
+        <div class="tabContainer">
+            <div class="tabOptionsContainer" id="tabOptionsContainer">
+                <button data-window-id="tab1window" class="active">Nome</button>
+                <button data-window-id="tab1window" class="">Nome</button>
+                <button data-window-id="tab1window" class="">Nome</button>
+            </div>
+            <div class="tabIndicator" id="tabIndicator">
+                <div></div>
+            </div>
+            <div class="tabWindowContainer" id="tabWindowContainer">
+                <div data-window='tab1window' class="tabWindow active">andre</div>
+            </div>
+        </div>
+
+        <comp-tab
+            tabs='[{"text":"tab1","windowId":"window1"},{"text":"tab2","windowId":"window2"},{"text":"tab3","windowId":"window3"},{"text":"tab4","windowId":"window4"}]'
+            accentColor="#f92749">
+            <div data-window="window1" class="active">
+                <div class="teste">
+                    <comp-input class="col-2" placeholder="Nome" type="text"></comp-input>
+                    <comp-textarea class="col-2" placeholder="Descrição">texto</comp-textarea>
+                    <comp-button class="secondary">Cancelar</comp-button>
+                    <comp-button>Enviar</comp-button>
+                </div>
+            </div>
+            <div data-window="window2">
+                <div class="teste">
+                    <comp-input class="col-2" placeholder="Zip Zops" type="text"></comp-input>
+                    <comp-textarea class="col-2" placeholder="Descrição">texto</comp-textarea>
+                    <comp-button class="secondary">Cancelar</comp-button>
+                    <comp-button>Enviar</comp-button>
+                </div>
+            </div>
+            <div data-window="window3">
+                <div class="teste">
+                    <comp-input class="col-2" placeholder="Email" type="text"></comp-input>
+                    <comp-textarea class="col-2" placeholder="Descrição">texto</comp-textarea>
+                    <comp-button class="secondary">Cancelar</comp-button>
+                    <comp-button>Enviar</comp-button>
+                </div>
+            </div>
+            <div data-window="window4">
+                <div class="teste">
+                    <comp-input class="col-2" placeholder="nada mais meno" type="text"></comp-input>
+                    <comp-textarea class="col-2" placeholder="Descrição">texto</comp-textarea>
+                    <comp-button class="secondary">Cancelar</comp-button>
+                    <comp-button>Enviar</comp-button>
+                </div>
+            </div>
+
+        </comp-tab>
+    </div>
+</body>
+
+</html>
