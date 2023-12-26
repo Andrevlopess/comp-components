@@ -1,76 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script src="./Js/compElements.js"></script>
-    <script defer src="./Js/index.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="./Css/style.css" />
+  <script src="./Js/compElements.js"></script>
+  <script defer src="./Js/index.js"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="stylesheet" href="./Css/style.css" />
 
-    <title>Comp Components</title>
-  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
 
-  <body>
-    <div class="container" id="container">
-      <comp-button onclick="tabModal.show()"> exibir modal</comp-button>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-      <comp-modal closeMethod="hide" modalTitle="Geografia" id="tabModal">
-        <comp-tab
-          tabs='[{"text":"Avaliações","windowId":"avaliacoesTab"},{"text":"Atividades","windowId":"atividadesTab"},{"text":"Faltas","windowId":"faltasTab"},{"text":"Teste","windowId":"faltasTab"},{"text":"andrevlopes","windowId":"faltasTab"}]'
-        >
-          <div data-window="avaliacoesTab" class="active">
-            <div class="teste">
-              <comp-input
-                class="col-2"
-                placeholder="Nome"
-                type="text"
-              ></comp-input>
-              <comp-textarea class="col-2" placeholder="Descrição"
-                >texto</comp-textarea
-              >
-              <comp-button class="secondary">Cancelar</comp-button>
-              <comp-button>Enviar</comp-button>
-            </div>
-          </div>
-          <div data-window="atividadesTab">
-            <div class="teste">
-              <comp-input
-                class="col-2"
-                placeholder="Zip Zops"
-                type="text"
-              ></comp-input>
-              <comp-textarea class="col-2" placeholder="Descrição"
-                >texto</comp-textarea
-              >
-              <comp-button class="secondary">Cancelar</comp-button>
-              <comp-button>Enviar</comp-button>
-            </div>
-          </div>
-          <div data-window="faltasTab">
-            <div class="teste">
-              <comp-input
-                class="col-2"
-                placeholder="Email"
-                type="text"
-              ></comp-input>
-              <comp-textarea class="col-2" placeholder="Descrição"
-                >texto</comp-textarea
-              >
-              <comp-button class="secondary">Cancelar</comp-button>
-              <comp-button>Enviar</comp-button>
-            </div>
-          </div>
-        </comp-tab>
-      </comp-modal>
+  <title>Comp Components</title>
+</head>
+
+<body>
+  <div class="container" id="container">
+    <div class="subjectCardContainer">
+      <div class="subjectCard" onclick="tabModal.show()">
+        <div class="subjectCardDetails">
+          <h3>Matemática</h3>
+          <p>Clique para ver suas notas</p>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="141" height="54" viewBox="0 0 141 54" fill="none">
+          <path d="M1.5 53.5L1.5 3" stroke="#CCCCCC" stroke-dasharray="2 2" />
+          <line x1="70.5" y1="53.5" x2="70.5" y2="0.5" stroke="#CCCCCC" stroke-dasharray="2 2" />
+          <path d="M139.5 53.5V3" stroke="#CCCCCC" stroke-dasharray="2 2" />
+          <path d="M1 30L70.0826 19.8365L140 3.5V54H1V30Z" fill="url(#paint0_linear_36_146)" />
+          <path d="M2.5 29L70.689 19L138.5 2.5" stroke="#06B6D4" stroke-width="4" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <defs>
+            <linearGradient id="paint0_linear_36_146" x1="70.5" y1="3" x2="70.5" y2="54" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#06B6D4" stop-opacity="0.7" />
+              <stop offset="1" stop-color="#06B6D4" stop-opacity="0.1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="subjectCard">
+        <div class="subjectCardDetails">
+          <h3>Matemática</h3>
+          <p>Clique para ver suas notas</p>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="141" height="54" viewBox="0 0 141 54" fill="none">
+          <path d="M1.5 53.5L1.5 3" stroke="#CCCCCC" stroke-dasharray="2 2" />
+          <line x1="70.5" y1="53.5" x2="70.5" y2="0.5" stroke="#CCCCCC" stroke-dasharray="2 2" />
+          <path d="M139.5 53.5V3" stroke="#CCCCCC" stroke-dasharray="2 2" />
+          <path d="M1 30L70.0826 19.8365L140 3.5V54H1V30Z" fill="url(#paint0_linear_36_146)" />
+          <path d="M2.5 29L70.689 19L138.5 2.5" stroke="#06B6D4" stroke-width="4" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <defs>
+            <linearGradient id="paint0_linear_36_146" x1="70.5" y1="3" x2="70.5" y2="54" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#06B6D4" stop-opacity="0.7" />
+              <stop offset="1" stop-color="#06B6D4" stop-opacity="0.1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="subjectCard">
+        <div class="subjectCardDetails">
+          <h3>Matemática</h3>
+          <p>Clique para ver suas notas</p>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="141" height="54" viewBox="0 0 141 54" fill="none">
+          <path d="M1.5 53.5L1.5 3" stroke="#CCCCCC" stroke-dasharray="2 2" />
+          <line x1="70.5" y1="53.5" x2="70.5" y2="0.5" stroke="#CCCCCC" stroke-dasharray="2 2" />
+          <path d="M139.5 53.5V3" stroke="#CCCCCC" stroke-dasharray="2 2" />
+          <path d="M1 30L70.0826 19.8365L140 3.5V54H1V30Z" fill="url(#paint0_linear_36_146)" />
+          <path d="M2.5 29L70.689 19L138.5 2.5" stroke="#06B6D4" stroke-width="4" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <defs>
+            <linearGradient id="paint0_linear_36_146" x1="70.5" y1="3" x2="70.5" y2="54" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#06B6D4" stop-opacity="0.7" />
+              <stop offset="1" stop-color="#06B6D4" stop-opacity="0.1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
     </div>
-  </body>
+
+    <comp-modal closeMethod="hide" modalTitle="Matemática" id="tabModal">
+      <comp-tab
+        tabs='[{"text":"Médias","windowId":"mediastab"},{"text":"Atividades","windowId":"atividadesTab"},{"text":"Faltas","windowId":"faltasTab"}]'>
+        <div data-window="mediastab" class="active">
+          <section class="reportsContainer">
+            <div class="mediasCardContainer">
+              <h4>Média por trimestre</h4>
+              <div class="mediaCard">
+                <p>1º Trimestre</p>
+                <h6>10.00</h6>
+              </div>
+              <div class="mediaCard">
+                <p>2º Trimestre</p>
+                <h6>7.00</h6>
+              </div>
+              <div class="mediaCard">
+                <p>3º Trimestre</p>
+                <h6>4.00</h6>
+              </div>
+            </div>
+
+            <canvas id="myChart"></canvas>
+
+          </section>
+        </div>
+        <div data-window="atividadesTab">
+          <div class="teste">
+            <comp-input class="col-2" placeholder="Zip Zops" type="text"></comp-input>
+            <comp-textarea class="col-2" placeholder="Descrição">texto</comp-textarea>
+            <comp-button class="secondary">Cancelar</comp-button>
+            <comp-button>Enviar</comp-button>
+          </div>
+        </div>
+        <div data-window="faltasTab">
+          <div class="teste">
+            <comp-input class="col-2" placeholder="Email" type="text"></comp-input>
+            <comp-textarea class="col-2" placeholder="Descrição">texto</comp-textarea>
+            <comp-button class="secondary">Cancelar</comp-button>
+            <comp-button>Enviar</comp-button>
+          </div>
+        </div>
+      </comp-tab>
+    </comp-modal>
+  </div>
+</body>
+
 </html>

@@ -1,5 +1,6 @@
 class Modal extends HTMLElement {
   // info Modal has titles attributes (modalTitle) and you can close it using the close() method (modal.close());
+  // You need run the function 'modal.show()' to insert it on the DOM;
 
   static observedAttributes = ["closemethod", "modaltitle"];
 
@@ -18,11 +19,14 @@ class Modal extends HTMLElement {
           display: flex;
           justify-content: center;
           align-items: end;
+          opacity: 0;
+          transition: 150ms;
+          animation: overlayFadein 150ms ease forwards;
         }
         .modal-content {
           box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
           background-color: #fff;
-          padding: 2em 1.6em;
+          padding: 0 1.6em 2em 1.6em;
           top: 0;
           border-radius: 1em 1em 0 0;
           display: flex;
@@ -43,22 +47,36 @@ class Modal extends HTMLElement {
           height: fit-content;
         }
   
+        .modalHeaderContainer {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          align-items:center;
+          position: sticky;
+          top:0;
+          z-index: 99;
+          background-color: #fff;
+          padding-top: 1em;
+        }
+
         .modalHeader {
           display: flex;
           justify-content: space-between;
+          width: 100%;
           align-items: center;
           gap: 5em;
         }
   
-        .overlayFadein {
-          opacity: 0;
-          transition: 150ms;
-          animation: overlayFadein 150ms ease forwards;
-  
-        }
-        #modalTitle{
+        .modalHeader p{
           font-size: 18px;
           font-weight: 700;
+        }
+
+        .modalHeaderContainer .modalIndicator{
+          width: 50px;
+          border-radius: 10px;
+          background-color: #ccc;
+          height: 4px;
         }
   
         .fade-out{
@@ -71,6 +89,7 @@ class Modal extends HTMLElement {
         @media (min-width: 640px) {
           .modal-content {
             margin-inline: 1em;
+            width: -moz-fit-content;
             width: fit-content;
             border-radius: 0.4em;
             animation: slide-in-top 250ms ease forwards;
@@ -82,6 +101,9 @@ class Modal extends HTMLElement {
   
           .fade-out {
             animation: slide-out-top 250ms ease forwards;
+          }
+          .modalHeaderContainer .modalIndicator{
+            display: none;
           }
         }
   
@@ -143,23 +165,26 @@ class Modal extends HTMLElement {
   
       </style>
       
-        <div class="modal-overlay overlayFadein hidden" id="modalOverlay">
-          <div class="modal-content" id="modalWindow">
-            <div class="modalHeader">
-              <p id="modalTitle"></p>
-              <button id="closeButton" class="closeModalbutton">
+      <div class="modal-overlay hidden" id="modalOverlay">
+      <div class="modal-content" id="modalWindow">
+        <div class="modalHeaderContainer">
+          <span class="modalIndicator"></span>
+          <div class="modalHeader">
+            <p id="modalTitle"></p>
+            <button id="closeButton" class="closeModalbutton">
               <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3.49512 3L21 20.5049" stroke="#010101" stroke-width="3" stroke-linecap="square" stroke-linejoin="round"/>
-              <path d="M20.5049 3L2.99999 20.5049" stroke="#010101" stroke-width="3" stroke-linecap="square" stroke-linejoin="round"/>
+                <path d="M3.49512 3L21 20.5049" stroke="#010101" stroke-width="3" stroke-linecap="square"
+                  stroke-linejoin="round" />
+                <path d="M20.5049 3L2.99999 20.5049" stroke="#010101" stroke-width="3" stroke-linecap="square"
+                  stroke-linejoin="round" />
               </svg>
-              
-              
-              </button>
-            </div>      
-  
-            <slot></slot>
+            </button>
           </div>
         </div>
+
+        <slot></slot>
+      </div>
+    </div>
     `;
 
     this.modalContainer = this.shadowRoot.querySelector("#modalOverlay");
@@ -169,10 +194,14 @@ class Modal extends HTMLElement {
   }
 
   connectedCallback() {
-    this.modalTitle.textContent = this.getAttribute("modalTitle");
-    this.closeButton.addEventListener("click", () => this.close());
-  }
+    // avoid closing modal when clicking on the modal window;
+    this.modal.addEventListener("click", (e) => e.stopPropagation());
 
+    this.modalTitle.textContent = this.getAttribute("modalTitle");
+    this.closeButton.addEventListener("click", (e) => this.close());
+    // closes modal on the overlay click;
+    this.modalContainer.addEventListener("click", (e) => this.close());
+  }
   close() {
     if (this.closeMethod === "hide") {
       this.modal.classList.add("fade-out");
@@ -1623,6 +1652,8 @@ class Toggle extends HTMLElement {
 class Tab extends HTMLElement {
   // this Tab web component requires the 'tabs' attribute, which is an array of objects containing  the type {text: string, windowId: string}, the 'text' property of the object is the text that will be displayed on the tab button, and the 'windowId' property of the object is the respective window id that needs to be passed on the inner HTML of the <comp-tab> as a <div> with the attr 'data-window = windowId';
 
+  // THE INITIAL WINDOW MUST HAVE THE 'active' CLASS;
+
   // the attr 'accent-color' can be passed to change the color of the tab and the tab indicator;
 
   static observedAttributes = ["tabs", "accent-color"];
@@ -1801,7 +1832,10 @@ class Tab extends HTMLElement {
         }%`;
       });
 
-      this.tabsContainer.insertBefore(tabButton, this.tabIndicator.parentElement);
+      this.tabsContainer.insertBefore(
+        tabButton,
+        this.tabIndicator.parentElement
+      );
     });
   }
 
