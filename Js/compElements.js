@@ -1712,13 +1712,6 @@ class Tab extends HTMLElement {
     .tabContainer .tabIndicator {
       position: relative;
       height: 4px;
-    }
-    
-    .tabContainer .tabIndicator > div {
-      position: absolute;
-      left: 0%;
-      width: 0%;
-      height: 100%;
       background-color: var(--accent-color);
       border-radius: 10px 10px 0px 0px;
       transition: all 300ms cubic-bezier(0.49, 0.91, 0.16, 1);
@@ -1754,9 +1747,7 @@ class Tab extends HTMLElement {
     <div class="tabOptionsContainer" id="tabOptionsContainer">
 
 
-      <div class="tabIndicator" id="tabIndicator">
-        <div></div>
-      </div>
+      <div class="tabIndicator" id="tabIndicator"></div>
     </div>
   
     <div class="tabWindowContainer" id="tabWindowContainer">
@@ -1771,7 +1762,7 @@ class Tab extends HTMLElement {
     this.tabContainer = this.shadowRoot.querySelector("#tab");
     this.tabsContainer = this.shadowRoot.querySelector("#tabOptionsContainer");
     this.windowContaner = this.shadowRoot.querySelector("#tabWindowContainer");
-    this.tabIndicator = this.shadowRoot.querySelector("#tabIndicator > div");
+    this.tabIndicator = this.shadowRoot.querySelector("#tabIndicator");
   }
 
   connectedCallback() {
@@ -1789,12 +1780,8 @@ class Tab extends HTMLElement {
     // set the grid template columns and tab Indicator width
     this.tabsContainer.style.setProperty(
       "--grid-length",
-      `repeat(${tabsLength} , minmax(100px, 1fr))`
+      `repeat(${tabsLength}, 1fr)`
     );
-    // this.tabIndicator.parentElement.style.width = `${}px`
-
-    this.tabIndicator.parentElement.style.gridColumn = `${tabsLength} span / ${tabsLength} span`;
-    this.tabIndicator.style.width = `${100 / tabsLength}%`;
 
     // creates tab buttons by according to the 'tabs' attr
     this.tabs.forEach((tab) => {
@@ -1827,15 +1814,13 @@ class Tab extends HTMLElement {
         this.tabsContainer.querySelector(".active").classList.remove("active");
         tabButton.classList.add("active");
 
-        this.tabIndicator.style.left = `${
-          Array.from(this.tabs).indexOf(tab) * (100 / this.tabs.length)
-        }%`;
+        console.log(Array.from(this.tabs).indexOf(tab));
+        this.tabIndicator.style.gridColumn = `${
+          Array.from(this.tabs).indexOf(tab) + 1
+        }`;
       });
 
-      this.tabsContainer.insertBefore(
-        tabButton,
-        this.tabIndicator.parentElement
-      );
+      this.tabsContainer.insertBefore(tabButton, this.tabIndicator);
     });
   }
 
