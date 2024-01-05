@@ -1694,6 +1694,7 @@ class Tab extends HTMLElement {
       grid-template-columns: var(--grid-length);
       align-items: center;
       overflow-x: scroll;
+      align-self: start;
     }
     
     .tabContainer .tabOptionsContainer button {
