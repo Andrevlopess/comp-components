@@ -1815,9 +1815,8 @@ class Tab extends HTMLElement {
         tabButton.classList.add("active");
 
         console.log(Array.from(this.tabs).indexOf(tab));
-        this.tabIndicator.style.gridColumn = `${
-          Array.from(this.tabs).indexOf(tab) + 1
-        }`;
+        this.tabIndicator.style.gridColumn = `${Array.from(this.tabs).indexOf(tab) + 1
+          }`;
       });
 
       this.tabsContainer.insertBefore(tabButton, this.tabIndicator);
@@ -1829,6 +1828,73 @@ class Tab extends HTMLElement {
       case "accent-color":
         this.tabContainer.style.setProperty("--accent-color", newValue);
         break;
+      default:
+        break;
+    }
+  }
+}
+
+class Drawer extends HTMLElement {
+  static observedAttributes = ['direction']
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+
+
+    this.shadowRoot.innerHTML = `
+    <style>
+        .drawerWindow {
+            position: fixed;
+            inset-block: 0;
+            left:0;
+            animation: slide-in .5s cubic-bezier(0.65, 0.05, 0.36, 1);
+        }
+        @keyframes slide-in {
+            from {
+              transform: translateX(var(--transform-dir));
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+    </style>
+
+    <div class="drawerWindow" id="drawer">
+        <slot></slot>
+    </div>
+    `
+
+
+    this.drawer = this.shadowRoot.querySelector('#drawer')
+  }
+  connectedCallback() {
+    console.log('connected');
+  }
+
+
+  attributeChangedCallback(name, oldValue, newValue) {
+
+    switch (name) {
+      case 'direction':
+        switch (newValue) {
+          case 'left':
+            this.drawer.style.setProperty("--transform-dir", '-100%');
+            this.drawer.style.left = 0;
+            this.drawer.style.right = 'auto';
+            break;
+          case 'right':
+            this.drawer.style.setProperty("--transform-dir", '100%');
+            this.drawer.style.left = 'auto';
+            this.drawer.style.right = 0;
+            break;
+          default:
+            console.error('Only left and right direction allowed')
+            break;
+        }
+
+        break;
+
       default:
         break;
     }
@@ -1864,4 +1930,7 @@ if (!customElements.get("comp-toggle")) {
 }
 if (!customElements.get("comp-tab")) {
   customElements.define("comp-tab", Tab);
+}
+if (!customElements.get("comp-drawer")) {
+  customElements.define("comp-drawer", Drawer);
 }
